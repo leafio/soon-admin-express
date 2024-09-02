@@ -1,0 +1,94 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["omitApi"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  username   String    @unique
+  password   String?
+  email      String?   @unique
+  phone      String?   @unique
+  name       String?
+  nickname   String?
+  avatar     String?
+  status     Int       @default(1)
+  gender     Int?
+  desc       String?
+  createTime DateTime  @default(now())
+  updateTime DateTime? @updatedAt
+  roleId     String?
+  deptId     Int?
+  role       Role?     @relation(fields: [roleId], references: [id])
+  dept       Dept?     @relation(fields: [deptId], references: [id])
+}
+
+model Dept {
+  id         Int       @id @default(autoincrement())
+  name       String
+  desc       String?
+  sort       Int?
+  parent     Dept?     @relation(name: "dept", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children   Dept[]    @relation(name: "dept")
+  parentId   Int?
+  createTime DateTime  @default(now())
+  updateTime DateTime? @updatedAt
+  users      User[]
+}
+
+model Menu {
+  id Int @id @default(autoincrement())
+
+  parent   Menu?  @relation(name: "menu", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children Menu[] @relation(name: "menu")
+  parentId Int?
+
+  name       String?
+  desc       String?
+  sort       Int?
+  menuType   String // 'page iframe link btn
+  path       String?
+  component  String?
+  redirect   String?
+  meta       String?
+  auth       String?
+  createTime DateTime  @default(now())
+  updateTime DateTime? @updatedAt
+
+  permissions Permission[]
+}
+
+model Role {
+  id     String  @id @default(uuid())
+  name   String
+  code   String? @unique
+  status Int?    @default(0)
+  desc   String?
+
+  createTime  DateTime     @default(now())
+  updateTime  DateTime?    @updatedAt
+  users       User[]
+  permissions Permission[]
+}
+
+model Permission {
+  id         Int      @id @default(autoincrement())
+  roleId     String
+  menuId     Int
+  createTime DateTime @default(now())
+  role       Role?    @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  menu       Menu?    @relation(fields: [menuId], references: [id], onDelete: Cascade)
+}
+
+model Captcha {
+  id          Int       @id @default(autoincrement())
+  code        String
+  expiredTime DateTime  @default(now())
+  createTime  DateTime  @default(now())
+  updateTime  DateTime? @updatedAt
+}

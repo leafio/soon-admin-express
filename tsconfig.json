@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "outDir": "dist",
+    "strict": true,
+    "lib": ["esnext"],
+    "esModuleInterop": true,
+    "removeComments": true
+  },
+  "include": [
+    "type.d.ts",
+    "src/**/*", 
+],
+"files": ["type.d.ts"]
+}
