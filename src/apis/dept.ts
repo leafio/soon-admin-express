@@ -32,7 +32,7 @@ router.delete("/dept/delete", authJwt("dept.del"), async (req, res) => {
   res.success(post)
 })
 router.put("/dept/update", authJwt("dept.edit"), async (req, res) => {
-  const data = req.body
+  const { children, ...data } = req.body
   const post = await prisma.dept.update({
     data,
     where: {

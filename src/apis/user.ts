@@ -62,7 +62,6 @@ router.get("user/:id", authJwt("user.detail"), async (req, res) => {
 router.put("/user/:id", authJwt("user.edit"), async (req, res) => {
   const { id } = req.params as { id: string }
   const data = getUser(req.body)
-  console.log("data", data)
   const post = await prisma.user.update({
     data: {
       ...data,

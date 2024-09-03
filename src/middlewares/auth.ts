@@ -13,7 +13,7 @@ export const authJwt = (code?: string) => (req: any, res: any, next: any) => {
     jwt.verify(token, JWT_SECRET, async (err: any, user: any) => {
       if (err) {
         console.error(err)
-        return res.sendStatus(403)
+        return res.sendStatus(401)
       }
       const { username } = user
       if (code) {

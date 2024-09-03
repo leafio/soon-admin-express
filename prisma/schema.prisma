@@ -66,7 +66,6 @@ model Menu {
 model Role {
   id     String  @id @default(uuid())
   name   String
-  code   String? @unique
   status Int?    @default(0)
   desc   String?
 
