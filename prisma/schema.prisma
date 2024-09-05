@@ -53,7 +53,6 @@ model Menu {
   sort       Int?
   menuType   String // 'page iframe link btn
   path       String?
-  component  String?
   redirect   String?
   meta       String?
   auth       String?

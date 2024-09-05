@@ -1,3 +1,99 @@
+[English](#soon-admin) | [中文](#soon-admin-1)
+
+# Soon-Admin
+
+### Introduction 📖
+
+Soon-Admin is full stuck admin system written by Typescript。
+
+- 🧑‍🤝‍🧑Frontend [soon-admin-vue3](https://github.com/leafio/soon-admin-vue3)
+- 👭Backend soon-admin-express `(this project)`
+
+### Features 🔨
+
+- framework: Express , ts-node
+- ORM:  prisma
+- database: sqlite , please change database by yourself
+- auth:  express-jwt , support api level control
+- i18n:  grig 
+- code style: prettier eslint
+- git: husky、lint-staged
+
+### Usage 📔
+
+- **Clone：**
+
+```bash
+git clone https://github.com/leafio/soon-admin-express.git
+```
+
+- **Install：**
+
+```bash
+yarn install
+```
+
+- **Run：**
+
+```bash
+yarn dev
+```
+
+- **Build：**
+
+```bash
+yarn build
+```
+
+- **Lint：**
+
+```bash
+# eslint check
+yarn lint:eslint
+
+# prettier format
+yarn lint:prettier
+```
+
+### Project Directory 📚
+
+```text
+soon-admin-express
+├─ .husky                  # 
+├─ prisma                  # 
+├─ public                  # static files
+├─ src
+│  ├─ apis                 # 
+│  ├─ i18n                 # 
+│  ├─ middlewares          # 
+│  ├─ service              # data operations
+│  ├─ utils                # helper functions
+│  ├─ index.ts             # project entry file
+│  └─ prisma.ts            # prisma instance
+├─ .env.development        # 
+├─ .env.production         # 
+├─ .gitignore              # 
+├─ .prettierignore         # 
+├─ .prettierrc             # 
+├─ eslint.config.mjs       # 
+├─ package.json            # project info and dependencies
+├─ README.md               # introduction
+├─ tsconfig.json           #
+└─ .type.d.ts              # global ts types
+
+```
+
+### Support Me 🍵
+
+If you like this project, just star it.🚀
+
+> I'm looking for a frontend job in Shanghai , hope a offer for me.
+> Email: leafnote@outlook.com
+
+<br />
+
+[English](#soon-admin) | [中文](#soon-admin-1)
+
 # Soon-Admin
 
 ### 介绍 📖
@@ -21,31 +117,31 @@ Soon-Admin 是一套完全以typescript开发的后台管理系统。
 
 - **Clone：**
 
-```text
+```bash
 git clone https://github.com/leafio/soon-admin-express.git
 ```
 
 - **Install：**
 
-```text
+```bash
 yarn install
 ```
 
 - **Run：**
 
-```text
+```bash
 yarn dev
 ```
 
 - **Build：**
 
-```
+```bash
 yarn build
 ```
 
 - **Lint：**
 
-```text
+```bash
 # eslint 检测代码
 yarn lint:eslint
 
@@ -81,9 +177,9 @@ soon-admin-express
 
 ```
 
-### 支持一下
+### 项目支持 🍵
 
-喜欢soon-fetch的话 , 在github上给个 **star** 吧.
-Email: leafnote@outlook.com
+喜欢 soon-admin 的话 , 在 github 上给个 star 吧.
 
 > 我目前在找前端的工作，位置上海。有岗位机会的话，可以联系我。
+> Email: leafnote@outlook.com
