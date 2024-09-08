@@ -1,10 +1,10 @@
 import { grig } from "grig"
 import en from "./en"
-import zhCn from "./zh-cn"
+import zh from "./zh"
 
 const i18n = {
-  "zh-cn": zhCn,
-  en: en,
+  zh,
+  en,
 }
 export default i18n
 
