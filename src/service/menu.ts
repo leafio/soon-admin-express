@@ -21,13 +21,16 @@ export async function listMenuTree(hasBtn = false) {
       parentId: null,
       ...hasBtnWhere,
     },
+    orderBy: [{ sort: "asc" }],
     include: {
       children: {
+        orderBy: [{ sort: "asc" }],
         where: {
           ...hasBtnWhere,
         },
         include: {
           children: {
+            orderBy: [{ sort: "asc" }],
             where: {
               ...hasBtnWhere,
             },
@@ -42,6 +45,7 @@ export async function listMenuTree(hasBtn = false) {
 
 export async function getMenuTree(roleId: string) {
   const tree = await prisma.menu.findMany({
+    orderBy: [{ sort: "asc" }],
     where: {
       parentId: null,
       permissions: {
@@ -55,6 +59,7 @@ export async function getMenuTree(roleId: string) {
     },
     include: {
       children: {
+        orderBy: [{ sort: "asc" }],
         where: {
           permissions: {
             some: {
