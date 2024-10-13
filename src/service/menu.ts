@@ -1,9 +1,11 @@
 import { prisma } from "../prisma"
-const parseChildren = (data: { children: any[]; meta: any }[]) => {
+const parseChildren = (data: { children?: any[]; meta: any }[]) => {
   data.forEach((item) => {
     item.meta = JSON.parse(item.meta)
-    if (item.children) {
+    if (item.children?.length) {
       parseChildren(item.children)
+    } else {
+      item.children = undefined
     }
   })
 }

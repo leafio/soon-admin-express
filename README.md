@@ -7,6 +7,7 @@
 Soon-Admin is full stuck admin system written by Typescript。
 
 - 🧑‍🤝‍🧑Frontend [soon-admin-vue3](https://github.com/leafio/soon-admin-vue3)
+- 🧑‍🤝‍🧑Frontend [soon-admin-react-nextjs](https://github.com/leafio/soon-admin-react-nextjs) 
 - 👭Backend soon-admin-express `(this project)`
 
 ### Features 🔨
@@ -15,7 +16,7 @@ Soon-Admin is full stuck admin system written by Typescript。
 - ORM:  prisma
 - database: sqlite , please change database by yourself
 - auth:  express-jwt , support api level control
-- i18n:  grig 
+- i18n:  soon-i18n 
 - code style: prettier eslint
 - git: husky、lint-staged
 
@@ -100,7 +101,8 @@ If you like this project, just star it.🚀
 
 Soon-Admin 是一套完全以typescript开发的后台管理系统。
 
-- 🧑‍🤝‍🧑前端[soon-admin-vue3](https://github.com/leafio/soon-admin-vue3)
+- 🧑‍🤝‍🧑前端[soon-admin-vue3](https://github.com/leafio/soon-admin-vue3) 
+- 🧑‍🤝‍🧑前端 [soon-admin-react-nextjs](https://github.com/leafio/soon-admin-react-nextjs)
 - 👭后端soon-admin-express `(本项目)`
 
 ### 项目功能 🔨
@@ -109,7 +111,7 @@ Soon-Admin 是一套完全以typescript开发的后台管理系统。
 - ORM采用 prisma
 - 数据库采用 sqlite ,请自行替换成自己需要的数据库
 - 权限授权采用 express-jwt , 支持接口级权限控制
-- 使用 grig 实现 i18n , 有良好的type提示约束 , 不到3K
+- 使用 soon-i18n 实现国际化 , 有良好的type提示约束 , 不到3K
 - 使用 Prettier 统一格式化代码 , 集成 ESLint代码校验规范
 - 使用 husky、lint-staged 规范提交信息
 

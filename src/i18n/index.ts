@@ -1,4 +1,4 @@
-import { grig } from "grig"
+import { yi } from "soon-i18n"
 import en from "./en"
 import zh from "./zh"
 
@@ -8,7 +8,7 @@ const i18n = {
 }
 export default i18n
 
-export function getGrig(req: { headers: any }) {
+export function getI18n(req: { headers: any }) {
   const lang = (req.headers["soon-lang"] as "en") ?? "en"
-  return grig(i18n[lang])
+  return yi(i18n[lang])
 }

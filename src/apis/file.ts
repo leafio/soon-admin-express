@@ -3,14 +3,14 @@ import { existsSync, unlinkSync, writeFileSync } from "fs"
 import multer from "multer"
 import path from "path"
 import { authJwt } from "../middlewares/auth"
-import { getGrig } from "../i18n"
+import { getI18n } from "../i18n"
 
 const router = express.Router()
 
 const upload = multer()
 
 router.post("/file", authJwt(), upload.single("file"), async (req, res) => {
-  const t = getGrig(req)
+  const t = getI18n(req)
   const file = req.file
   if (file) {
     const filename =
@@ -24,7 +24,7 @@ router.post("/file", authJwt(), upload.single("file"), async (req, res) => {
   res.err(t("upload-failed"))
 })
 router.delete("/file/:name", authJwt(), async (req, res) => {
-  const t = getGrig(req)
+  const t = getI18n(req)
   const { name } = req.params
   const filepath = path.resolve("public/files", name)
   if (existsSync(filepath)) {

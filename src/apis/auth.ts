@@ -4,7 +4,7 @@ import svgCaptcha from "svg-captcha"
 import { authJwt, genJwtToken } from "../middlewares/auth"
 import { getPermissionsCodes, getMenuTree } from "../service/menu"
 import { detail_user } from "../service/user"
-import { getGrig } from "../i18n"
+import { getI18n } from "../i18n"
 
 const router = express.Router()
 
@@ -28,7 +28,7 @@ router.get("/captcha", async (req, res) => {
 })
 
 router.post("/login", async (req, res) => {
-  const t = getGrig(req)
+  const t = getI18n(req)
   const { username, password, code, codeId } = req.body
   //验证码
   const captcha = await prisma.captcha.findUnique({ where: { id: codeId } })

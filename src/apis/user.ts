@@ -5,7 +5,7 @@ import { authJwt } from "../middlewares/auth"
 import { exportExcel } from "../utils/excel"
 import { User } from "@prisma/client"
 import { getPartialObject } from "../utils/data"
-import { getGrig } from "../i18n"
+import { getI18n } from "../i18n"
 import dayjs from "dayjs"
 
 const router = express.Router()
@@ -74,7 +74,7 @@ router.put("/user/:id", authJwt("user.edit"), async (req, res) => {
 })
 
 router.get("/user/export", authJwt("user.export"), async (req, res) => {
-  const t = getGrig(req)
+  const t = getI18n(req)
   const { pageIndex, pageSize, ...rest } = req.query as ListUserQuery
   const { list } = await list_user(rest)
   const outList = list.map((user) => ({
