@@ -183,5 +183,4 @@ soon-admin-express
 
 喜欢 soon-admin 的话 , 在 github 上给个 star 吧.
 
-> 我目前在找前端的工作，位置上海。有岗位机会的话，可以联系我。
 > Email: leafnote@outlook.com

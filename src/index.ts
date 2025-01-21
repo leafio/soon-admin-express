@@ -48,7 +48,7 @@ app.use("/api", routerRole)
 app.use("/api", routerMenu)
 app.use("/api", routerFile)
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.send("Express + TypeScript Server")
 })
 

@@ -9,20 +9,25 @@ const router = express.Router()
 
 const upload = multer()
 
-router.post("/file", authJwt(), upload.single("file"), async (req, res) => {
-  const t = getI18n(req)
-  const file = req.file
-  if (file) {
-    const filename =
-      new Date().toISOString().replaceAll(":", "_").replaceAll(".", "_") +
-      "+" +
-      file.originalname
-    writeFileSync(path.resolve("public/files", filename), file.buffer)
-    const url = `/files/${filename}`
-    res.success({ url })
-  }
-  res.err(t("upload-failed"))
-})
+router.post(
+  "/file",
+  authJwt(),
+  upload.single("file") as any,
+  async (req, res) => {
+    const t = getI18n(req)
+    const file = req.file
+    if (file) {
+      const filename =
+        new Date().toISOString().replaceAll(":", "_").replaceAll(".", "_") +
+        "+" +
+        file.originalname
+      writeFileSync(path.resolve("public/files", filename), file.buffer)
+      const url = `/files/${filename}`
+      res.success({ url })
+    }
+    res.err(t("upload-failed"))
+  },
+)
 router.delete("/file/:name", authJwt(), async (req, res) => {
   const t = getI18n(req)
   const { name } = req.params
