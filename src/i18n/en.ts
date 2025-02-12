@@ -5,6 +5,7 @@ export default {
   "upload-failed": "Upload failed !",
   "file-not-exists": "File not exists !",
   "invalid-token": "Invalid TOKEN !",
+  "pwd-change-failed": "Password changed failed !",
   user: {
     col: {
       username: "Username",

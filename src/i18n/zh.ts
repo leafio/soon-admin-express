@@ -5,6 +5,7 @@ export default {
   "upload-failed": "上传失败",
   "file-not-exists": "文件不存在",
   "invalid-token": "token 已失效",
+  "pwd-change-failed": "密码修改失败",
   user: {
     col: {
       username: "用户名",

@@ -124,4 +124,27 @@ router.get("/auth/code", authJwt(), async (req, res) => {
   return res.success(codes)
 })
 
+router.post("/auth/change_pwd", authJwt(), async (req, res) => {
+  const username = req.username
+  const { password, new_password } = req.body
+  const t = getI18n(req)
+
+  const user = await prisma.user.findUnique({
+    select: { id: true },
+    where: {
+      username,
+      password,
+    },
+  })
+  if (user?.id) {
+    await prisma.user.update({
+      data: { ...user, password: new_password },
+      where: { id: Number(user.id) },
+    })
+    res.success()
+  } else {
+    res.err(t("pwd-change-failed"))
+  }
+})
+
 export default router
