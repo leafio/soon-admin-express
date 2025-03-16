@@ -26,7 +26,7 @@ export function verifyRefreshToken(token: string) {
 }
 
 export const authJwt =
-  (code?: string, passExpired: boolean = false) =>
+  <T>(code?: T, passExpired: boolean = false) =>
   (req: any, res: any, next: any) => {
     const token = req.headers.authorization
 

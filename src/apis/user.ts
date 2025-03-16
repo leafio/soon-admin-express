@@ -32,19 +32,27 @@ const getUser = (data: any) =>
     "desc",
   ])
 
-router.get("/user", authJwt("user.list"), async (req, res) => {
+type AUTH_USER =
+  | "user.add"
+  | "user.edit"
+  | "user.del"
+  | "user.export"
+  | "user.list"
+  | "user.detail"
+
+router.get("/user", authJwt<AUTH_USER>("user.list"), async (req, res) => {
   const result = await list_user(req.query as ListUserQuery)
   res.success(result)
 })
-router.post("/user", authJwt("user.add"), async (req, res) => {
+router.post("/user", authJwt<AUTH_USER>("user.add"), async (req, res) => {
   const data = getUser(req.body)
   const result = await prisma.user.create({
     data,
   })
   res.success(result)
 })
-router.delete("/user/:id", authJwt("user.del"), async (req, res) => {
-  const { id } = req.params as { id: string }
+router.delete("/user/:id", authJwt<AUTH_USER>("user.del"), async (req, res) => {
+  const { id } = req.params
   const user = await prisma.user.delete({
     where: {
       id: Number(id),
@@ -53,14 +61,14 @@ router.delete("/user/:id", authJwt("user.del"), async (req, res) => {
   res.success(user)
 })
 
-router.get("user/:id", authJwt("user.detail"), async (req, res) => {
-  const { id } = req.params as { id: string }
+router.get("users/:id", authJwt<AUTH_USER>("user.detail"), async (req, res) => {
+  const { id } = req.params
   const user = await detail_user(Number(id))
   res.success(user)
 })
 
-router.put("/user/:id", authJwt("user.edit"), async (req, res) => {
-  const { id } = req.params as { id: string }
+router.put("/user/:id", authJwt<AUTH_USER>("user.edit"), async (req, res) => {
+  const { id } = req.params
   const data = getUser(req.body)
   const post = await prisma.user.update({
     data: {
@@ -73,45 +81,51 @@ router.put("/user/:id", authJwt("user.edit"), async (req, res) => {
   res.success(post)
 })
 
-router.get("/user/export", authJwt("user.export"), async (req, res) => {
-  const t = getI18n(req)
-  const { pageIndex, pageSize, ...rest } = req.query as ListUserQuery
-  const { list } = await list_user(rest)
-  const outList = list.map((user) => ({
-    ...user,
-    status: user.status ? t("user.status.enabled") : t("user.status.disabled"),
-    gender:
-      user.gender === 1
-        ? t("user.gender.man")
-        : user.gender === 2
-          ? t("user.gender.woman")
-          : t("user.gender.unknown"),
-    roleName: user.role?.name,
-    deptName: user.dept?.name,
-    createTime: dayjs(user.createTime).format("YYYY-MM-DD HH:mm:ss"),
-    updateTime: dayjs(user.updateTime).format("YYYY-MM-DD HH:mm:ss"),
-  }))
-  const tableHeader = {
-    id: "ID",
-    username: t("user.col.username"),
-    nickname: t("user.col.nickname"),
-    name: t("user.col.name"),
-    gender: t("user.col.gender"),
-    phone: t("user.col.phone"),
-    email: t("user.col.email"),
-    status: t("user.col.status"),
-    avatar: t("user.col.avatar"),
-    roleName: t("user.col.roleName"),
-    deptName: t("user.col.deptName"),
-    createTime: t("user.col.createTime"),
-    updateTime: t("user.col.updateTime"),
-  }
-  const file = exportExcel(outList, { tableHeader, fitWidth: true })
-  res.setHeader(
-    "Content-Type",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  )
-  res.setHeader("Content-Disposition", "attachment; filename=user.xlsx")
-  res.send(file)
-})
+router.get(
+  "/user/export",
+  authJwt<AUTH_USER>("user.export"),
+  async (req, res) => {
+    const t = getI18n(req)
+    const { pageIndex, pageSize, ...rest } = req.query as ListUserQuery
+    const { list } = await list_user(rest)
+    const outList = list.map((user) => ({
+      ...user,
+      status: user.status
+        ? t("user.status.enabled")
+        : t("user.status.disabled"),
+      gender:
+        user.gender === 1
+          ? t("user.gender.man")
+          : user.gender === 2
+            ? t("user.gender.woman")
+            : t("user.gender.unknown"),
+      roleName: user.role?.name,
+      deptName: user.dept?.name,
+      createTime: dayjs(user.createTime).format("YYYY-MM-DD HH:mm:ss"),
+      updateTime: dayjs(user.updateTime).format("YYYY-MM-DD HH:mm:ss"),
+    }))
+    const tableHeader = {
+      id: "ID",
+      username: t("user.col.username"),
+      nickname: t("user.col.nickname"),
+      name: t("user.col.name"),
+      gender: t("user.col.gender"),
+      phone: t("user.col.phone"),
+      email: t("user.col.email"),
+      status: t("user.col.status"),
+      avatar: t("user.col.avatar"),
+      roleName: t("user.col.roleName"),
+      deptName: t("user.col.deptName"),
+      createTime: t("user.col.createTime"),
+      updateTime: t("user.col.updateTime"),
+    }
+    const file = exportExcel(outList, { tableHeader, fitWidth: true })
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    )
+    res.setHeader("Content-Disposition", "attachment; filename=user.xlsx")
+    res.send(file)
+  },
+)
 export default router

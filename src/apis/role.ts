@@ -4,7 +4,9 @@ import { parsePageParams, parseSkipTake } from "../utils/prisma"
 import { authJwt } from "../middlewares/auth"
 const router = express.Router()
 
-router.get("/role/list", authJwt("role.list"), async (req, res) => {
+type AUTH_ROLE = "role.add" | "role.edit" | "role.del" | "role.list"
+
+router.get("/role/list", authJwt<AUTH_ROLE>("role.list"), async (req, res) => {
   const { pageSize, pageIndex } = (req.query as any) ?? {}
   const where = {}
   const total = await prisma.role.count({ where })
@@ -52,50 +54,62 @@ router.get("/role/list", authJwt("role.list"), async (req, res) => {
 //   })
 //   res.success({ list: tree, total: tree.length })
 // })
-router.post("/role/create", authJwt("role.add"), async (req, res) => {
-  const { permissions, ...role } = req.body
-  const ids: number[] = permissions ?? []
-  const result = await prisma.role.create({
-    data: {
-      ...role,
-      permissions: {
-        create: ids.map((p) => ({ menuId: p })),
+router.post(
+  "/role/create",
+  authJwt<AUTH_ROLE>("role.add"),
+  async (req, res) => {
+    const { permissions, ...role } = req.body
+    const ids: number[] = permissions ?? []
+    const result = await prisma.role.create({
+      data: {
+        ...role,
+        permissions: {
+          create: ids.map((p) => ({ menuId: p })),
+        },
       },
-    },
-  })
-  res.success(result)
-})
+    })
+    res.success(result)
+  },
+)
 
-router.delete("/role/delete", authJwt("role.del"), async (req, res) => {
-  const { id } = req.body
-  const post = await prisma.role.delete({
-    where: {
-      id: id,
-    },
-  })
-  res.success(post)
-})
-router.put("/role/update", authJwt("role.edit"), async (req, res) => {
-  const { permissions, ...role } = req.body
-  const ids: number[] = permissions ?? []
-  const delPermissions = prisma.permission.deleteMany({
-    where: {
-      roleId: role.id,
-    },
-  })
-  const updateRole = prisma.role.update({
-    data: {
-      ...role,
-      permissions: {
-        create: ids.map((p) => ({ menuId: p })),
+router.delete(
+  "/role/delete",
+  authJwt<AUTH_ROLE>("role.del"),
+  async (req, res) => {
+    const { id } = req.body
+    const post = await prisma.role.delete({
+      where: {
+        id: id,
       },
-    },
-    where: {
-      id: role.id,
-    },
-  })
-  const [, result] = await prisma.$transaction([delPermissions, updateRole])
-  res.success(result)
-})
+    })
+    res.success(post)
+  },
+)
+router.put(
+  "/role/update",
+  authJwt<AUTH_ROLE>("role.edit"),
+  async (req, res) => {
+    const { permissions, ...role } = req.body
+    const ids: number[] = permissions ?? []
+    const delPermissions = prisma.permission.deleteMany({
+      where: {
+        roleId: role.id,
+      },
+    })
+    const updateRole = prisma.role.update({
+      data: {
+        ...role,
+        permissions: {
+          create: ids.map((p) => ({ menuId: p })),
+        },
+      },
+      where: {
+        id: role.id,
+      },
+    })
+    const [, result] = await prisma.$transaction([delPermissions, updateRole])
+    res.success(result)
+  },
+)
 
 export default router
